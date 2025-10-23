@@ -17,8 +17,38 @@
  * not by creating new nodes or swapping data values.
  * Returns pointer to the new head of the sorted list.
  */
-node* isort(node* list) {
-    return NULL; // Placeholder implementation
+node * sorted_insert(node * list, node *key){
+    print_list(list);
+    //hvis enten listne er null eller det første element er større end vores nuværende key skal key være det nye første element
+    if(list == NULL || key->data < list->data){
+        key->next = list;
+        list = key;
+    }
+    else{
+        node * iterator = list;
+        while(iterator->next != NULL && iterator->next->data < key->data){
+            iterator = iterator->next;
+        }
+
+        key->next = iterator->next;
+        iterator->next = key;
+    }
+    return list;
+}
+
+node * isort(node* list) {
+    /* TODO: Implement insertion sort for linked list */
+
+    node * sorted = NULL;
+
+    node * current = list;
+
+    while(current != NULL){
+        node * next = current->next;
+        sorted = sorted_insert(sorted,current);
+        current = next;
+    }
+    return sorted;
 }
 
 /* Helper function to print the list */

@@ -63,7 +63,10 @@ bool full(stack *s) {
  * Post-condition: both stacks in the queue are empty
  */
 void init_queue(queue *q) {
+    initialize(&q->s1);
+    initialize(&q->s2);
     /* TODO: initialize queue */
+    
 }
 
 /* 
@@ -73,6 +76,7 @@ void init_queue(queue *q) {
  */
 void enqueue(queue *q, int x) {
     /* TODO: Implement enqueue using ONLY stack operations */
+    push(&q->s1,x);
 }
 
 /* 
@@ -81,8 +85,15 @@ void enqueue(queue *q, int x) {
  */
 int dequeue(queue *q) {
     /* TODO: Implement dequeue using ONLY stack operations */
-    
-    return 0;  // TODO: Replace with actual implementation
+    while(!empty(&q->s1)){
+        push(&q->s2,pop(&q->s1));
+    }
+    //we are now empty, pop last element in s2
+    int out = pop(&q->s2);
+    while(!empty(&q->s2)){
+        push(&q->s1,pop(&q->s2));
+    }
+    return out;  // TODO: Replace with actual implementation
 }
 
 /* 
@@ -92,7 +103,7 @@ int dequeue(queue *q) {
  */
 bool queue_empty(queue *q) {
     /* TODO: Implement using ONLY stack operations */
-    return false;  // TODO: Replace with actual implementation
+    return empty(&q->s1);  // TODO: Replace with actual implementation
 }
 
 /* 
